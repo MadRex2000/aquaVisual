@@ -12,4 +12,4 @@ RUN pip install --upgrade pip
 RUN pip install -r $APP_DIR/requirements/dev.txt
 
 WORKDIR $APP_DIR/src
-CMD ["python3", "manager.py", "runserver", "0.0.0.0:8000"]
+CMD ["python3", "manager.py", "runserver", "0.0.0.0:8860"]
