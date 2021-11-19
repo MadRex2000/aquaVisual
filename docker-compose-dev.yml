@@ -1,0 +1,48 @@
+version: "3"
+services:
+  db:
+    container_name: 'postgres'
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${PG_PWD}
+      -  POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - ~/pgdata:/var/lib/postgresql/data/
+
+  redis:
+    container_name: "redis"
+    image: redis
+    ports:
+      - "6379:6379"
+
+  mqtt:
+    container_name: "mqtt"
+    image: eclipse-mosquitto
+    ports:
+      - "1883:1883"
+    volumes:
+      - ~/mosquitto:/mosquitto
+      - ~/mosquitto/data:/mosquitto/data
+      - ~/mosquitto/log:/mosquitto/log
+
+  backend:
+    container_name: backend
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./media:/usr/local/app/src/media
+    ports:
+      - "8000:8000"
+    command:
+      - bash
+      - -c
+      - |
+        python3 manage.py migrate
+        python3 manage.py makemigrations
+        python3 manage.py migrate
+        python3 manage.py collectstatic --no-input
+        exec python3 manage.py runserver 0.0.0.0:8000
