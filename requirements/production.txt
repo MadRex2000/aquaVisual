@@ -1,0 +1,4 @@
+-r base.txt
+
+psycopg2==2.9.2
+uWSGI==2.0.19.1
