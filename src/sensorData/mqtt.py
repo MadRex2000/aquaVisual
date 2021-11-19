@@ -2,7 +2,11 @@ from threading import Thread
 import time
 import json
 
+from django.conf import settings
 import paho.mqtt.client as mqtt
+
+from sensorData.models import Data, Sensor
+
 
 client = mqtt.Client(client_id='server', clean_session=False)
 
@@ -13,18 +17,12 @@ def on_connect(client, userdata, flags, rc):
 
 
 def on_message(client, userdata, msg):
-    print(f'{msg.topic}, {msg.payload}')
     data = str(msg.payload.decode('utf-8'))
-    print(msg.topic)
-    print(data)
     data = json.loads(data)
-    print(data)
-    print(data['tds'])
-    print(data['temp'])
-    print(data['ph'])
 
     if msg.topic == 'aqua/data':
-        pass
+        sensor = Sensor.objects.get(name=data['sensor'])
+        Data.objects.create(sensor=sensor, temp=data['temp'], ph=data['ph'], tds=data['tds'])
 
 
 def mqtt_start():
@@ -37,8 +35,9 @@ def mqtt_setup():
     client.on_connect = on_connect
     client.on_message = on_message
 
-    broker = '0.0.0.0'
-    client.connect(broker, 1883, 60)
+    broker = settings.MQTT_HOST_NAME
+    port = settings.MQTT_PORT
+    client.connect(broker, port, 60)
     client.reconnect_delay_set(min_delay=1, max_delay=2000)
 
 

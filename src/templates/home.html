@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Dashboard</h1>
+    <div class="btn-group">
+      <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        日期
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" id="day1" href="{% url 'home' %}2021-11-19">2021-11-19</a></li>
+        <li><a class="dropdown-item" id="day2" href="{% url 'home' %}2021-11-19">2021-11-19</a></li>
+        <li><a class="dropdown-item" id="day3" href="{% url 'home' %}2021-11-19">2021-11-19</a></li>
+        <li><a class="dropdown-item" id="day4" href="{% url 'home' %}2021-11-19">2021-11-19</a></li>
+        <li><a class="dropdown-item" id="day5" href="{% url 'home' %}2021-11-19">2021-11-19</a></li>
+      </ul>
+    </div>
+</div>
+
+<canvas id="dataChart" width=100%></canvas>
+
+<script>
+const labels = [
+    {% if datas %}
+    {% for data in datas %}
+    "{{ data.created|date:'Y-m-d H:i' }}",
+    {% endfor %}
+    {% endif %}
+];
+
+const data = {
+  labels: labels,
+  datasets: [{
+    label: '溫度',
+    backgroundColor: 'rgb(255, 99, 132)',
+    borderColor: 'rgb(255, 99, 132)',
+    data: [
+        {% if datas %}
+        {% for data in datas %}
+        {{ data.temp }},
+        {% endfor %}
+        {% endif %}
+    ],
+  },
+  {
+    label: 'pH值',
+    backgroundColor: 'rgb(255, 199, 12)',
+    borderColor: 'rgb(255, 199, 12)',
+    data: [
+        {% if datas %}
+        {% for data in datas %}
+        {{ data.ph }},
+        {% endfor %}
+        {% endif %}
+  ],
+  },
+  {
+    label: '總溶解量',
+    backgroundColor: 'rgb(22, 145, 12)',
+    borderColor: 'rgb(22, 145, 12)',
+    data: [
+        {% if datas %}
+        {% for data in datas %}
+        {{ data.tds }},
+        {% endfor %}
+        {% endif %}],
+  }]
+};
+
+const config = {
+  type: 'line',
+  data: data,
+  options: {}
+};
+
+const dataChart = new Chart(
+    document.getElementById('dataChart'),
+    config
+  );
+
+var myDate = new Date();
+document.getElementById("day1").innerHTML = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate();
+document.getElementById("day1").href = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate();
+document.getElementById("day2").innerHTML = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + (myDate.getDate() - 1);
+document.getElementById("day2").href = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + (myDate.getDate() - 1);
+document.getElementById("day3").innerHTML = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + (myDate.getDate() - 2);
+document.getElementById("day3").href = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + (myDate.getDate() - 2);
+document.getElementById("day4").innerHTML = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + (myDate.getDate() - 3);
+document.getElementById("day4").href = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + (myDate.getDate() - 3);
+document.getElementById("day5").innerHTML = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + (myDate.getDate() - 4);
+document.getElementById("day5").href = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + (myDate.getDate() - 4);
+</script>
+
+{% endblock %}

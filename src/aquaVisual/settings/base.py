@@ -151,7 +151,8 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
-HOST_NAME = env('HOST_NAME')
+MQTT_HOST_NAME = env('MQTT_HOST_NAME')
+MQTT_PORT = int(env('MQTT_PORT'))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

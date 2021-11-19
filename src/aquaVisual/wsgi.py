@@ -17,4 +17,4 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'aquaVisual.settings.local')
 
 application = get_wsgi_application()
 
-mqtt.run()
+mqtt.mqtt_run()
