@@ -27,7 +27,10 @@ def on_message(client, userdata, msg):
 
 def mqtt_start():
     global client
-    client.loop_forever(retry_first_connection=True)
+    try:
+        client.loop_forever(retry_first_connection=True)
+    except json.JSONDecodeError:
+        client.loop_forever(retry_first_connection=True)
 
 
 def mqtt_setup():
