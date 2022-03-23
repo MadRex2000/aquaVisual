@@ -15,7 +15,7 @@ This repository serves the website of IoT class. This project is open source and
 
 ##### Containerized Development Environment
 
-1. Edit the `DATABASE_URL` in `src/aquaVisual/settings/local.env`(Copy from [`local.sample.env`](../src/aquaVisual/settings/local.sample.env)). Use the Postgres username, password, database name, and port configured in [`./docker-compose-dev.yml`](../docker-compose-dev.yml).
+1. Edit the `DATABASE_URL` in `src/aquaVisual/settings/local.env`(Copy from [`local.sample.env`](./src/aquaVisual/settings/local.sample.env)). Use the Postgres username, password, database name, and port configured in [`./docker-compose-dev.yml`](./docker-compose-dev.yml).
 
     ```
     DATABASE_URL=postgres://postgres:postgres@db:5432/aquavisual
