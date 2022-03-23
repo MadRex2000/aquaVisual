@@ -5,7 +5,7 @@ import json
 from django.conf import settings
 import paho.mqtt.client as mqtt
 
-from sensorData.models import Data, Sensor
+from sensorData.models import ClassData, Data, Sensor
 
 
 client = mqtt.Client(client_id='server', clean_session=False)
@@ -14,6 +14,7 @@ client = mqtt.Client(client_id='server', clean_session=False)
 def on_connect(client, userdata, flags, rc):
     print(f'Connect to result code {rc}')
     client.subscribe('aqua/data')
+    client.subscribe('cse/iot')
 
 
 def on_message(client, userdata, msg):
@@ -24,6 +25,9 @@ def on_message(client, userdata, msg):
         sensor = Sensor.objects.get(name=data['sensor'])
         Data.objects.create(sensor=sensor, temp=data['temp'], ph=data['ph'], tds=data['tds'])
 
+    if msg.topic == 'cse/iot':
+        sensor = Sensor.objects.get(name=data['sensor'])
+        ClassData.objects.create(sensor=sensor, temp=data['temp'], tur=data['tur'], dis=data['dis'], count=data['count'])
 
 def mqtt_start():
     global client

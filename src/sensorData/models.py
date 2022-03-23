@@ -19,3 +19,14 @@ class Data(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+class ClassData(models.Model): 
+    sensor = models.ForeignKey(Sensor, related_name='iot_data', on_delete=models.CASCADE, verbose_name='感測器')
+    temp = models.FloatField(verbose_name='溫度')
+    tur = models.FloatField(verbose_name='水濁度')
+    dis = models.FloatField(verbose_name='距離')
+    count = models.IntegerField(verbose_name='數量')
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.id)
