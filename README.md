@@ -4,16 +4,15 @@ This repository serves the website of IoT class. This project is open source and
 
 ## Getting Started
 
-
 ### Set up Development Environment % Run Server
 
-#### Method 1: `Quick Start`
+### Method 1: `Quick Start`
 
-##### Requirements
+#### Requirements
 - Docker Engine 1.13.1+
 - Docker Compose 1.10.0+
 
-##### Containerized Development Environment
+#### Containerized Development Environment
 
 1. Edit the `DATABASE_URL` in `src/aquaVisual/settings/local.env`(Copy from [`local.sample.env`](./src/aquaVisual/settings/local.sample.env)). Use the Postgres username, password, database name, and port configured in [`./docker-compose-dev.yml`](./docker-compose-dev.yml).
 
@@ -27,9 +26,9 @@ This repository serves the website of IoT class. This project is open source and
     docker-compose -f docker-compose-dev.tml up --build
     ```
 
-#### Method 2: `Step by step`
+### Method 2: `Step by step`
 
-##### Requirements
+#### Requirements
 - Git 1.8+
 - Python 3.7+
 
@@ -39,12 +38,12 @@ Create your virtual environment:
 And enable it:
 `. venv/bin/activate`
 
-##### Install Dependencies
+#### Install Dependencies
 
 Use pip to install Python dependencies:
 `pip3 install -r requirements.txt`
 
-##### Set up Local Environment Variables for Database
+#### Set up Local Environment Variables for Database
 
 Settings are stored in environment variables via [django-environ](http://django-environ.readthedocs.org/en/latest/). The quickest way to start is to copy `local.sample.env` into `local.env`:
     cp src/aquaVisual/settings/local.sample.env src/aquaVisual/settings/local.env
@@ -56,22 +55,22 @@ Then edit the `SECRET_KEY` line in `local.env`, replacing `{{ secret_key }}` int
 
 After that, just run the migration.
 
-##### Get Ready for Development
+#### Get Ready for Development
 
 `cd` into the `src` directory:
 
     cd src
 
-##### Migrate the database:
+#### Migrate the database:
 
     python manage.py migrate
 
-##### Create Super User
+#### Create Super User
 
     python manage.py createsuperuser
 
 Now you’re all set!
 
-##### Run the Development Server
+#### Run the Development Server
 
     python manage.py runserver
